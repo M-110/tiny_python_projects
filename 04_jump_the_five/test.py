@@ -40,3 +40,14 @@ def test_02():
     rv, out = getstatusoutput(f'{prg} "That number to call is 098-765-4321."')
     assert rv == 0
     assert out.rstrip() == 'That number to call is 512-340-6789.'
+    
+    
+# --------------------------------------------------
+def test_verbose():
+    """test that --verbose works"""
+
+    rv, out = getstatusoutput(f'{prg} "1-5" --verbose')
+    assert rv == 0
+    assert out.rstrip() == 'nine-zero'
+    
+
