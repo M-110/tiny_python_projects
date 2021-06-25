@@ -90,3 +90,22 @@ def test_file():
         finally:
             if os.path.isfile(out_file):
                 os.remove(out_file)
+                
+                
+def test_lower():
+    """Test lowercase."""
+    out = getoutput(f'{prg} "I LOVE You!" --lower')
+    assert out.strip() == 'i love you!'
+
+
+def test_dir():
+    """Test outputting files as a directory."""
+    getoutput(f'{prg} test-outs --outdir upper-dir')
+    for file_a, file_b in zip(os.listdir('test-outs'), 
+                              os.listdir('upper-dir')):
+        with open(os.path.join('test-outs', file_a), 'r', encoding='utf8') as reader_a:
+            with open(os.path.join('upper-dir', file_b), 'r', encoding='utf8') as reader_b:
+                assert reader_a.read().lstrip().rstrip().upper() == reader_b.read().lstrip().rstrip()
+                
+        
+
