@@ -73,3 +73,14 @@ def test_file_with_vowel():
 
     out = getoutput(f'{prg} --vowel o {fox}')
     assert out.strip() == 'Tho qoock brown fox jomps ovor tho lozy dog.'
+
+
+# --------------------------------------------------
+def test_collapse():
+    """ fox.txt """
+
+    out = getoutput(f'{prg} -c --vowel a "Four soup please"')
+    assert out.strip() == 'Far sap plasa'
+    
+    
+
