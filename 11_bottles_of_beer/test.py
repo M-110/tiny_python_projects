@@ -104,6 +104,68 @@ def test_random():
         out += '\n'  # because the last newline is removed
         assert rv == 0
         assert hashlib.md5(out.encode('utf-8')).hexdigest() == sums[n]
+        
+        
+# --------------------------------------------------
+def test_text():
+    """Numbers as text."""
+
+    expected = ('Two bottles of beer on the wall,\n'
+                'Two bottles of beer,\n'
+                'Take one down, pass it around,\n'
+                'One bottle of beer on the wall!\n\n'
+                'One bottle of beer on the wall,\n'
+                'One bottle of beer,\n'
+                'Take one down, pass it around,\n'
+                'No more bottles of beer on the wall!')
+
+    rv, out = getstatusoutput(f'{prg} -n 2 -t')
+    assert rv == 0
+    assert out == expected
+        
+        
+# --------------------------------------------------
+def test_steps():
+    """Numbers as text."""
+
+    expected = ('15 bottles of beer on the wall,\n'
+                '15 bottles of beer,\n'
+                'Take five down, pass them around,\n'
+                '10 bottle of beer on the wall!\n\n'
+                '10 bottles of beer on the wall,\n'
+                '10 bottles of beer,\n'
+                'Take five down, pass them around,\n'
+                '5 bottle of beer on the wall!\n\n'
+                '5 bottle of beer on the wall,\n'
+                '5 bottle of beer,\n'
+                'Take five down, pass them around,\n'
+                'No more bottles of beer on the wall!')
+
+    rv, out = getstatusoutput(f'{prg} -n 15 -s 5')
+    assert rv == 0
+    assert out == expected
+        
+        
+# --------------------------------------------------
+def test_steps_uneven():
+    """Numbers as text."""
+
+    expected = ('15 bottles of beer on the wall,\n'
+                '15 bottles of beer,\n'
+                'Take five down, pass them around,\n'
+                '10 bottle of beer on the wall!\n\n'
+                '10 bottles of beer on the wall,\n'
+                '10 bottles of beer,\n'
+                'Take five down, pass them around,\n'
+                '5 bottle of beer on the wall!\n\n'
+                '5 bottle of beer on the wall,\n'
+                '5 bottle of beer,\n'
+                'Take five down, pass them around,\n'
+                'No more bottles of beer on the wall!')
+
+    rv, out = getstatusoutput(f'{prg} -n 15 -s 7')
+    assert rv == 0
+    assert out == expected
 
 
 # --------------------------------------------------
