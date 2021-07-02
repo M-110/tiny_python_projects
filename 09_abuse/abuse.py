@@ -59,10 +59,10 @@ def get_args():
 
 
 def main():
-    """Main"""
+    """Print random insults."""
     args = get_args()
     random.seed(args.seed)
-    
+
     for _ in range(args.number):
         adjectives = ', '.join(random.sample(ADJECTIVES, k=args.adjectives))
         noun = random.choice(NOUNS)
