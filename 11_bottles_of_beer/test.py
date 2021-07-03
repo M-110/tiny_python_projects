@@ -131,13 +131,13 @@ def test_steps():
     expected = ('15 bottles of beer on the wall,\n'
                 '15 bottles of beer,\n'
                 'Take five down, pass them around,\n'
-                '10 bottle of beer on the wall!\n\n'
+                '10 bottles of beer on the wall!\n\n'
                 '10 bottles of beer on the wall,\n'
                 '10 bottles of beer,\n'
                 'Take five down, pass them around,\n'
-                '5 bottle of beer on the wall!\n\n'
-                '5 bottle of beer on the wall,\n'
-                '5 bottle of beer,\n'
+                '5 bottles of beer on the wall!\n\n'
+                '5 bottles of beer on the wall,\n'
+                '5 bottles of beer,\n'
                 'Take five down, pass them around,\n'
                 'No more bottles of beer on the wall!')
 
@@ -152,18 +152,36 @@ def test_steps_uneven():
 
     expected = ('15 bottles of beer on the wall,\n'
                 '15 bottles of beer,\n'
-                'Take five down, pass them around,\n'
-                '10 bottle of beer on the wall!\n\n'
-                '10 bottles of beer on the wall,\n'
-                '10 bottles of beer,\n'
-                'Take five down, pass them around,\n'
-                '5 bottle of beer on the wall!\n\n'
-                '5 bottle of beer on the wall,\n'
-                '5 bottle of beer,\n'
-                'Take five down, pass them around,\n'
+                'Take seven down, pass them around,\n'
+                '8 bottles of beer on the wall!\n\n'
+                '8 bottles of beer on the wall,\n'
+                '8 bottles of beer,\n'
+                'Take seven down, pass them around,\n'
+                '1 bottle of beer on the wall!\n\n'
+                '1 bottle of beer on the wall,\n'
+                '1 bottle of beer,\n'
+                'Take one down, pass it around,\n'
                 'No more bottles of beer on the wall!')
 
     rv, out = getstatusoutput(f'{prg} -n 15 -s 7')
+    assert rv == 0
+    assert out == expected
+    
+    
+# --------------------------------------------------
+def test_reverse():
+    """Two bottles of beer"""
+
+    expected = ('0 bottles of beer on the wall,\n'
+                '0 bottles of beer,\n'
+                'Take one down, pass it around,\n'
+                '1 bottle of beer on the wall!\n\n'
+                '1 bottle of beer on the wall,\n'
+                '1 bottle of beer,\n'
+                'Take one down, pass it around,\n'
+                '2 bottles of beer on the wall!')
+
+    rv, out = getstatusoutput(f'{prg} -n 2 -r')
     assert rv == 0
     assert out == expected
 

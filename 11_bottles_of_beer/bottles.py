@@ -4,6 +4,9 @@ Purpose: Count down the numbers of bottles on the wall.
 """
 
 import argparse
+from typing import List, Union
+
+from num2words import num2words
 
 VERSE_TEMPLATE = '''{number} bottle{s} of beer on the wall,
 {number} bottle{s} of beer,
@@ -21,27 +24,84 @@ def get_args():
                         help='How many bottles',
                         default=10,
                         type=int)
+    parser.add_argument('-s',
+                        '--steps',
+                        help='How many steps to take',
+                        default=1,
+                        type=int)
+    parser.add_argument('-t',
+                        '--text',
+                        help='Print numbers as text',
+                        action='store_true')
+    parser.add_argument('-r',
+                        '--reversed',
+                        help='Reverse the order',
+                        action='store_true')
 
     args = parser.parse_args()
     if args.number < 1:
         parser.error(f'--num "{args.number}" must be greater than 0')
+    if args.steps < 1:
+        parser.error(f'--steps "{args.steps}" must be greater than 0')
     return args
 
 
-def main():
-    """Print the verses of the song."""
-    args = get_args()
-    for i in range(args.number, 0, -1):
-        next_number = i - 1
-        plural = '' if i == 1 else 's'
-        plural_next = '' if next_number == 1 else 's'
-        new_line = '\n' if next_number else ''
-        if next_number == 0:
+def generate_sequence(number: int, steps: int, reverse: bool) -> List[int]:
+    """Generate a  bottle sequence which will count bottles a number of times
+    with the given step length."""
+    if reverse:
+        return [min(i, number) for i in range(0, number + steps, steps)]
+    else:
+        return [max(i, 0) for i in range(number, -steps, -steps)]
+
+
+def print_sequence(sequence: List[int], text: bool):
+    """Convert."""
+    length = len(sequence) - 1
+    for i in range(length):
+        current_number = sequence[i]
+        next_number = sequence[i + 1]
+        step = num2words(abs(current_number - next_number))
+
+        current_plural = pluralize(current_number)
+        next_plural = pluralize(next_number)
+
+        step_pronoun = 'it' if step == 'one' else 'them'
+
+        if text:
+            current_number = num2words(current_number).title()
+            next_number = num2words(next_number).title()
+            
+        if next_number in ['Zero', 0]:
             next_number = 'No more'
-        print(
-            VERSE_TEMPLATE.format(
-                number=i, next_number=next_number, s=plural, s_next=plural_next)
-            + new_line)
+
+        line_end = '' if i == length - 1 else '\n'
+        print_verse(current_number, current_plural, next_number,
+                    next_plural, step, step_pronoun, line_end)
+
+
+def pluralize(number: int):
+    """Returns 's' if the number is not 1, otherwise returns ''."""
+    if number == 1:
+        return ''
+    else:
+        return 's'
+
+
+def print_verse(current_number: Union[str, int], current_plural: Union[str, int], next_number: str,
+                next_plural: str, step: str, step_pronoun: str,
+                line_end: str):
+    """Print a verse of the song given the string parameters."""
+    print(f'''{current_number} bottle{current_plural} of beer on the wall,
+{current_number} bottle{current_plural} of beer,
+Take {step} down, pass {step_pronoun} around,
+{next_number} bottle{next_plural} of beer on the wall!{line_end}''')
+
+
+def main():
+    args = get_args()
+    sequence = generate_sequence(args.number, args.steps, args.reversed)
+    print_sequence(sequence, args.text)
 
 
 if __name__ == '__main__':
