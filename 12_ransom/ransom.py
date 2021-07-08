@@ -8,6 +8,7 @@ import random
 
 
 def get_args():
+    """Get args from command line."""
     parser = argparse.ArgumentParser(
         description='Convert text to ransom style',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -18,7 +19,7 @@ def get_args():
 
 
 def main():
-    """Do"""
+    """Print a ransom version of the text."""
     args = get_args()
     text = args.text
     if '.txt' in text:
