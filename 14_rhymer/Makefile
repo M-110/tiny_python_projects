@@ -1,4 +1,11 @@
-.PHONY: test
+.PHONY: test, rate, clean
 
 test:
-	pytest -xv test.py
+	python3 -m pytest -xvv test.py 
+
+rate:
+	-flake8 rhymer.py
+	-pylint rhymer.py
+
+clean:
+	yapf rhymer.py --in-place --style google

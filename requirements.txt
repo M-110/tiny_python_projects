@@ -5,3 +5,6 @@ mypy
 pylint
 pytest
 yapf
+
+PyDictionary~=2.0.1
+num2words~=0.5.10
