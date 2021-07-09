@@ -8,6 +8,13 @@ import os
 import re
 
 
+SOUTHERN_DICT = {}
+with open('southern_dict.txt', encoding='utf8') as file:
+    for line in file:
+        key, value = line.split('|')
+        SOUTHERN_DICT[key.strip()] = value.strip()
+        
+
 def get_args():
     """Get args from command line."""
     parser = argparse.ArgumentParser(
@@ -29,8 +36,11 @@ def drop_the_g(text: str) -> str:
 
 def you_to_yall(text: str) -> str:
     """Convert all you's to y'all."""
-    pattern = r'\b(y)(ou)\b'
-    return re.sub(pattern, r"\1'all", text, flags=re.IGNORECASE)
+    for key, value in SOUTHERN_DICT.items():
+        pattern = r'\b' + key + r'\b'
+        text = re.sub(pattern, value, text, flags=re.IGNORECASE)
+    return text
+    
 
 
 def main():
