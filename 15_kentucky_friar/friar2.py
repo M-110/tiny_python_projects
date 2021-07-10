@@ -7,13 +7,12 @@ import argparse
 import os
 import re
 
-
 SOUTHERN_DICT = {}
 with open('southern_dict.txt', encoding='utf8') as file:
     for line in file:
         key, value = line.split('|')
         SOUTHERN_DICT[key.strip()] = value.strip()
-        
+
 
 def get_args():
     """Get args from command line."""
@@ -40,7 +39,6 @@ def you_to_yall(text: str) -> str:
         pattern = r'\b' + key + r'\b'
         text = re.sub(pattern, value, text, flags=re.IGNORECASE)
     return text
-    
 
 
 def main():
