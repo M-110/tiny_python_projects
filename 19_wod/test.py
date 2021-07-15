@@ -54,12 +54,12 @@ def test_seed1():
     """Runs OK"""
 
     expected = """
-Exercise      Reps
-----------  ------
-Pushups         56
-Situps          88
-Crunches        27
-Burpees         35
+Exercise    Reps
+--------  ------
+Pushups       56
+Situps        88
+Crunches      27
+Burpees       35
 """
 
     seed_flag = '-s' if random.choice([0, 1]) else '--seed'
@@ -73,12 +73,12 @@ def test_seed1_easy():
     """Runs OK"""
 
     expected = """
-Exercise      Reps
-----------  ------
-Pushups         28
-Situps          44
-Crunches        13
-Burpees         17
+Exercise    Reps
+--------  ------
+Pushups       28
+Situps        44
+Crunches      13
+Burpees       17
 """
 
     seed_flag = '-s' if random.choice([0, 1]) else '--seed'

@@ -18,7 +18,7 @@ def get_args():
 
 def translate(text: str) -> str:
     """Replace all words with their numeric translation."""
-    return re.sub(r'[^\s]+', lambda x: sum_word(x[0]), text)
+    return re.sub(r'\S+', lambda x: sum_word(x[0]), text)
 
 
 def sum_word(word: str) -> str:

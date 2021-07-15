@@ -1,4 +1,11 @@
-.PHONY: test
+.PHONY: test, clean, rate
 
 test:
-	pytest -xv test.py
+	python3 -m pytest test.py -v
+
+clean:
+	yapf wod.py --in-place --style google
+
+rate:
+	-flake8 wod.py
+	-pylint wod.py
