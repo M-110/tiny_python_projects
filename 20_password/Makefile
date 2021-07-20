@@ -1,9 +1,16 @@
-.PHONY: test
+.PHONY: test, clean, rate
 
 WORDS = "../inputs/words.txt"
 
-test: words
-	pytest -xv test.py unit.py
+test: #words
+	python3 -m pytest -xv test.py
+#
+#words:
+#	[[ -f $(WORDS) ]] || (cd ../inputs && unzip words.txt.zip)
 
-words:
-	[[ -f $(WORDS) ]] || (cd ../inputs && unzip words.txt.zip)
+clean:
+	yapf password.py --in-place --style google
+
+rate:
+	-flake8 password.py
+	-pylint password.py

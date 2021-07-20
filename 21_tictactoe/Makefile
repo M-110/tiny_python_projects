@@ -1,7 +1,14 @@
-.PHONY: test
+.PHONY: test, clean, rate
 
 test:
-	pytest -xv test.py
+	python3 -m pytest -xv test.py
 
 unit:
-	pytest -xv unit.py
+	python3 -m pytest -xv unit.py
+
+clean:
+	yapf tictactoe.py --in-place --style google
+
+rate:
+	-flake8 tictactoe.py
+	-pylint tictactoe.py
